@@ -31,4 +31,5 @@ class Tracker:
     def create_config_file_for_new_trackers(self):
         with open('tracker_config.json', 'w') as f:
             json.dump(self.tracker_list,f)
+            #self.tracker_list = json.load(f)
         #key = load_pem_public_key(self.tracker_list.get('192.168.0.208')[1].encode(),default_backend()) future me will thank me for this line
