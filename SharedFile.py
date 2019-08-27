@@ -12,14 +12,16 @@ class SharedFile:
 
     def create_hash_table_of_file(self):
         self.segments_hashes = [] #array for hashes of segments of shared file
-
+        self.segments = [] #file fragmented into segments to send over network in array
         with self.file_holder as f:
             segment_hash = hashlib.md5()
             segment = f.read(self.segment_size)#get segment
             segment_hash.update(segment)
             self.segments_hashes.append(segment_hash.hexdigest())#calculate hash and add to array
+            self.segments.append(segment)
             while segment:#continue until file's end
                 segment_hash = hashlib.md5()
                 segment = f.read(self.segment_size)
                 segment_hash.update(segment)
                 self.segments_hashes.append(segment_hash.hexdigest())
+                self.segments.append(segment)
