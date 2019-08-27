@@ -1,4 +1,12 @@
 from SharedFile import SharedFile
 from Tracker import Tracker
-my_tracker = Tracker()
-print(my_tracker.tracker_list)
+
+
+#print("1. Create first tracker and config file")
+#print("2. Create tracker from config file")
+#choice = input("->")
+#path = input("Enter path to file to share")
+#if choice == '1':
+#    my_tracker = Tracker(path)
+my_tracker = Tracker('/home/misterk/Desktop/lorem.txt')
+
