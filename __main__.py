@@ -1,2 +1,4 @@
 from SharedFile import SharedFile
-aaa = SharedFile('/home/misterk/Desktop/lorem.txt',1024)
+from Tracker import Tracker
+my_tracker = Tracker()
+print(my_tracker.tracker_list)
