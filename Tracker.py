@@ -16,7 +16,7 @@ from SharedFile import SharedFile
 
 class Tracker:
     """
-        Peer to peer tracker class. Purpose of this class is to be root of bittorrent protocol.
+        Peer to peer tracker class. Purpose of this class is to be root of protocol.
         It contains information about tracer network, cryptographic keys and file details.
         Attributes:
             str:ip            : ip address of tracer.
@@ -28,18 +28,22 @@ class Tracker:
             SharedFile:shared_file : Class which represents file that is going to be shared in the network.
         Constructor:
             str:path         : path to shared file.
-            int:segment_size : size of segments to which is file going to be divided. (default size is 4)
+            int:segment_size : size of segments to which is file going to be divided. (default size is 1024 bytes)
         Methods:
             create_config_file_for_new_trackers : This method serializes tracker list into json format file.
     """
-    def __init__(self, path, segment_size=4):
+    def __init__(self, path, segment_size=1024, config_json_path=''):
         # Constructor for Tracer class. Constructor obtains ip address of net card and fill ip field.s
         gw = os.popen("ip -4 route show default").read().split()  # magic for obtain local ip add
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # magic for obtain local ip add
         s.connect((gw[2], 0))  # magic for obtain local ip add
         self.ip = s.getsockname()[0]  # magic for obtain local ip add
         self.key = rsa.generate_private_key(65537, 2048, default_backend())
-        self.tracker_list = {}  # list of active trackers
+        if config_json_path == '':
+            self.tracker_list = {}  # list of active trackers
+        else:
+            with open(config_json_path, 'r') as config_json:
+                self.tracker_list = json.load(config_json)
         self.tracker_list.update(
             {
                 self.ip: [
