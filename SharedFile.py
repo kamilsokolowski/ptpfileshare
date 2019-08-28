@@ -1,17 +1,20 @@
 import os
 import hashlib
+import ntpath
 
 
 class SharedFile:
     """
         This class represents file that is going to be shared in network
         Attributes:
+            str:file_name         : name of shared file
             str:path         : path to shared file.
             file_holder      : handle to file.
             int:size         : size of the file.
             int:segment_size : size in bytes of single segment to send over network.
             str:segments_hashes : list of segment hashes of shared file.
             byte:segments    : list of file segments.
+            int:segment_count: number of segments
         Constructor:
             str:path : path to shared file
             int:segment_size : size of segment in bytes
@@ -20,6 +23,7 @@ class SharedFile:
     """
     def __init__(self, path, segment_size):
         # Constructor which holds handle to file and basic information about file.
+        self.file_name = ntpath.basename(path)
         self.path = path
         self.file_holder = open(path, 'rb')
         self.size = os.stat(path).st_size
@@ -27,6 +31,7 @@ class SharedFile:
         self.segments_hashes = []  # array for hashes of segments of shared file
         self.segments = []  # file fragmented into segments to send over network in array
         self.create_hash_table_of_file()
+        self.segment_count = len(self.segments)
 
     def create_hash_table_of_file(self):
         # Method which is responsible for building segments_hashes list.

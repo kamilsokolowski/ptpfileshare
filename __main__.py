@@ -8,6 +8,6 @@ from Tracker import Tracker
 # path = input("Enter path to file to share")
 # if choice == '1':
 #    my_tracker = Tracker(path)
-#my_tracker = Tracker('/home/misterk/Desktop/lorem.txt')
-my_tracker = Tracker('/home/misterk/Desktop/lorem.txt', 1024, 'tracker_config.json')
+my_tracker = Tracker('/home/misterk/Desktop/lorem.txt')
+#my_tracker = Tracker('/home/misterk/Desktop/lorem.txt', 1024, 'tracker_config.json')
 

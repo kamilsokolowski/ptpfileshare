@@ -1,6 +1,7 @@
 import json
 import socket
 import os
+from Magnet import Magnet
 
 # from cryptography.hazmat.primitives.serialization import load_pem_public_key
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -26,6 +27,7 @@ class Tracker:
                                 list 2 elements status of tracker(True or False) and it's Public key to
                                 verify digital signature.
             SharedFile:shared_file : Class which represents file that is going to be shared in the network.
+            Magnet:magnet_file : Class which represents all data about file required by peer to connect
         Constructor:
             str:path         : path to shared file.
             int:segment_size : size of segments to which is file going to be divided. (default size is 1024 bytes)
@@ -55,7 +57,15 @@ class Tracker:
             }
         )  # adding itself as active tracker
         self.shared_file = SharedFile(path, segment_size)  # create file to share
-        self.create_config_file_for_new_trackers()
+        self.create_config_file_for_new_trackers() # create new config file for new trackers
+        self.magnet_file = Magnet(
+            self.shared_file.file_name,
+            self.shared_file.size,
+            self.shared_file.segment_size,
+            self.shared_file.segment_count,
+            self.shared_file.segments_hashes,
+            self.tracker_list) # create magnet data structure
+        self.magnet_file.generate_magnet_file() #create magnet file for peers to connect
 
     def create_config_file_for_new_trackers(self):
         # Method for serializing tracer list into json file.
