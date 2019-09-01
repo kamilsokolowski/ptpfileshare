@@ -7,7 +7,7 @@ class Peer:
 
 
     def get_avg_ping(self, ip):
-        # Metod which is used to create list of best pings with it ip
+        # Metod which is used to create list of best pings with thier ip
         sorted_list_with_ping = []
         for i in ip:
             s = subprocess.run(["ping", "-c 4", i[0]], stdout=subprocess.PIPE)
