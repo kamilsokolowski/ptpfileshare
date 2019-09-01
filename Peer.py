@@ -15,6 +15,8 @@ class Peer:
             sorted_list_with_ping.append((data_from_ping.split("/")[4],i))
         sorted_list_with_ping.sort()
         top_3_ping_with_ip = sorted_list_with_ping[0:4]
+
+        
         return top_3_ping_with_ip
 
 
